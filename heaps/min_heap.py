@@ -22,7 +22,16 @@ class MinHeap:
             Time Complexity: ?
             Space Complexity: ?
         """
-        pass
+        # check for value, if no value, set value of new node to key
+        if value == None:
+            value = key
+        
+        # if value, create new node and add to self.store, end of heap
+        node = HeapNode(key, value)
+        self.store.append(node)
+        # use heap_up helper to check the value of appended node against parent and order heap accordingly
+        self.heap_up(len(self.store) -1)
+        
 
     def remove(self):
         """ This method removes and returns an element from the heap
@@ -30,7 +39,22 @@ class MinHeap:
             Time Complexity: ?
             Space Complexity: ?
         """
-        pass
+        # check if empty
+        if self.empty():
+            return None
+        
+        # if not empty, swap the last index with the root
+        self.swap(0, len(self.store)-1)
+       
+        # remove the root and store it
+        min = self.store.pop()
+        
+        # call heap_down helper? 
+        self.heap_down(0)
+        
+        #return the value of the root - the min value
+        return min.value
+        
 
 
     
@@ -47,7 +71,7 @@ class MinHeap:
             Time complexity: ?
             Space complexity: ?
         """
-        pass
+        return len(self.store) == 0
 
 
     def heap_up(self, index):
@@ -60,7 +84,18 @@ class MinHeap:
             Time complexity: ?
             Space complexity: ?
         """
-        pass
+        # compare the index to the parent index and if larger, swap node positions 
+       
+        if index == 0:
+            return None
+        
+        # use swap helper to swap the node with the parent node
+
+        parent = (index -1) // 2
+        if self.store[index].key < self.store[parent].key:
+            self.swap(index, parent)
+            #continue to heap_up until the root is reached and every node ordered correctly 
+            self.heap_up(parent)
 
     def heap_down(self, index):
         """ This helper method takes an index and 
