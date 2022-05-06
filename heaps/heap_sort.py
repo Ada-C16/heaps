@@ -2,8 +2,9 @@ from . import min_heap as h
 
 def heap_sort(list):
     """ This method uses a heap to sort an array.
-        Time Complexity:  ?
-        Space Complexity: ?
+        Time Complexity:  O(n log n)
+        Space Complexity: O(n log n) even though it sorts in place it still uses heap_down
+            which is O(log n)
     """
     heap = h.MinHeap(list)
     for item in list:
