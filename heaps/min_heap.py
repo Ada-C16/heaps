@@ -128,25 +128,3 @@ class MinHeap:
         temp = self.store[index_1]
         self.store[index_1] = self.store[index_2]
         self.store[index_2] = temp
-
-
-
-if __name__ == '__main__':
-
-    heap = MinHeap()
-    # Arrange
-    heap.add(3, "Pasta")
-    heap.add(57, "Cake")
-    heap.add(6, "Soup")
-    heap.add(1, "Pizza")
-    # heap.add(0, "Donuts")
-    # heap.add(16, "Cookies")
-
-
-    # Act
-    print(heap)
-    #  [(0, Donuts), (1, Pizza), (6, Soup), (57, Cake), (3, Pasta), (16, Cookies)]
-    # returned_items = ["Donuts", "Pizza", "Pasta", "Soup", "Cookies", "Cake"]
-    # print(returned_items)
-    # for item in returned_items:
-    #     assert heap.remove() == item
