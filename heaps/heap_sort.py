@@ -9,6 +9,5 @@ def heap_sort(list):
         Space Complexity: O(1)
     """
     heap = MinHeap()
-    for item in list:
-        heap.add(item)
+    [heap.add(item) for item in list]
     return [heap.remove() for _ in range(heap.length)]
