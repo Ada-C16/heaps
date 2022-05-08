@@ -1,6 +1,5 @@
 
 
-from os import remove
 from heaps.min_heap import MinHeap
 
 
