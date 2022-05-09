@@ -1,5 +1,8 @@
+from logging import root
+import re
+
+
 class HeapNode:
-  
     def __init__(self, key, value):
         self.key = key
         self.value = value
@@ -19,18 +22,32 @@ class MinHeap:
     def add(self, key, value = None):
         """ This method adds a HeapNode instance to the heap
             If value == None the new node's value should be set to key
-            Time Complexity: ?
-            Space Complexity: ?
+            Time Complexity: O(log n)
+            Space Complexity: O(1)
         """
-        pass
+        node = None
+        if value == None:
+            value = key
+        
+        node = HeapNode(key, value)
+        self.store.append(node)
+        self.heap_up(self.last_index())
+
 
     def remove(self):
         """ This method removes and returns an element from the heap
             maintaining the heap structure
-            Time Complexity: ?
-            Space Complexity: ?
+            Time Complexity: O(log n)
+            Space Complexity: O(1)
         """
-        pass
+        if self.empty():
+            return None
+
+        self.swap(0, self.last_index())
+        root = self.store.pop(self.last_index()).value
+        self.heap_down(0)
+
+        return root
 
 
     
@@ -44,10 +61,12 @@ class MinHeap:
 
     def empty(self):
         """ This method returns true if the heap is empty
-            Time complexity: ?
-            Space complexity: ?
+            Time complexity: O(1)
+            Space complexity: O(1)
         """
-        pass
+
+        return len(self.store) == 0
+
 
 
     def heap_up(self, index):
@@ -57,18 +76,52 @@ class MinHeap:
             property is reestablished.
             
             This could be **very** helpful for the add method.
-            Time complexity: ?
-            Space complexity: ?
+            Time complexity: O(log n)
+            Space complexity: O(1)
         """
-        pass
+        if index == 0:
+            return
+
+        swap = (index - 1) // 2
+
+        if self.store[index].key < self.store[swap].key:
+            self.swap(index, swap)
+            self.heap_up(swap)
+
+        elif self.store[index].key == self.store[swap].key and self.store[index].value < self.store[swap].value:
+            self.swap(index, swap)
+            self.heap_up(swap)               
+
+
 
     def heap_down(self, index):
         """ This helper method takes an index and 
             moves the corresponding element down the heap if it's 
             larger than either of its children and continues until
             the heap property is reestablished.
+            Time complexity: O(log n)
+            Space complexity: O(1)
         """
-        pass
+        left = (index*2) + 1
+        right = (index*2) + 2
+
+        if left > self.last_index():
+            return
+
+        to_compare = left
+
+        if right <= self.last_index():
+            if self.store[right].key < self.store[left].key:
+                to_compare = right
+    
+        if self.store[index].key > self.store[to_compare].key:
+            self.swap(index, to_compare)
+            self.heap_down(to_compare)
+
+        elif self.store[index].key == self.store[to_compare].key and self.store[index].value > self.store[to_compare].value:
+            self.swap(index, to_compare)
+            self.heap_up(to_compare)               
+
 
     
     def swap(self, index_1, index_2):
@@ -79,3 +132,10 @@ class MinHeap:
         temp = self.store[index_1]
         self.store[index_1] = self.store[index_2]
         self.store[index_2] = temp
+    
+    def last_index(self):
+        """ This method gives you the last index
+            of your heap.
+        """
+        return len(self.store)-1
+
