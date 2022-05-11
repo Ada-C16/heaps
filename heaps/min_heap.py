@@ -1,5 +1,5 @@
-from queue import Empty
-from turtle import left
+# from queue import Empty
+# from turtle import left
 
 
 class HeapNode:
@@ -50,7 +50,6 @@ class MinHeap:
 
         return min.value
 
-
     
     def __str__(self):
         """ This method lets you print the heap, when you're testing your app.
@@ -65,9 +64,7 @@ class MinHeap:
             Time complexity: O(1)
             Space complexity: O(1)
         """
-        if len(self.store) == 0:
-            return True
-        return False
+        return len(self.store) == 0
 
 
     def heap_up(self, index):
@@ -77,8 +74,8 @@ class MinHeap:
             property is reestablished.
             
             This could be **very** helpful for the add method.
-            Time complexity: ?
-            Space complexity: ?
+            Time complexity: O(nlogn)
+            Space complexity: O(1)
         """
         # return when index = 0
         if index == 0:
@@ -90,34 +87,42 @@ class MinHeap:
         # check parent and current index
         if self.store[parent].key > self.store[index].key:
             self.swap(parent, index)
-        index = parent
+            index = parent
         
-        #recursively check until index == 0
-        return self.heap_up(index)
+            #recursively check until index == 0
+            self.heap_up(index)
 
     def heap_down(self, index):
         """ This helper method takes an index and 
             moves the corresponding element down the heap if it's 
             larger than either of its children and continues until
             the heap property is reestablished.
-        """
-        # check children
-        # if children > index, swap
-        # return when index > heap size
+            
+            Time complexity: O(nlogn)
+            Space complexity: O(1)
+        """       
+        heap_length = len(self.store)
 
-        # return when index is greater than size of heap
-        if index > len(self.store) - 1:
-            return
-        
         left = (index * 2) + 1
         right = (index * 2) + 2
 
-        if self.store[left].key > self.store[index].key:
-            self.swap(left, index)
-        index = left
-
-        return self.heap_down(index)
-
+        # check if right/left is valid
+        if left < heap_length:
+            if right < heap_length:
+                # compare the two children and set child to the smaller child
+                if self.store[left].key < self.store[right].key:
+                    child = left
+                else:
+                    child = right
+            else:
+                child = left
+        
+            # compare child and cuurent index
+            if self.store[index].key > self.store[child].key:
+                self.swap(child, index)
+                index == child
+                self.heap_down(index)
+        
     
     def swap(self, index_1, index_2):
         """ Swaps two elements in self.store
@@ -127,11 +132,3 @@ class MinHeap:
         temp = self.store[index_1]
         self.store[index_1] = self.store[index_2]
         self.store[index_2] = temp
-
-
-# heap = MinHeap()
-# heap.add(3, "Pasta")
-# heap.add(7, "Noodles")
-# heap.add(2, "Icecream")
-# heap.add(5, "Zaub Haus")
-# print(heap)
