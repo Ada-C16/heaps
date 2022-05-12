@@ -83,13 +83,10 @@ class MinHeap:
             Space complexity:  makes a recursive call
         """
         # compare the index to the parent index and if larger, swap node positions 
-       
-        
         if index == 0:
             return None
         
         # use swap helper to swap the node with the parent node
-
         parent = (index - 1) // 2
         if self.store[index].key < self.store[parent].key:
             self.swap(index, parent)
@@ -103,25 +100,25 @@ class MinHeap:
             the heap property is reestablished.
         """
         
-        left = index * 2 + 1
-        right = index * 2 + 2
+        left_child = index * 2 + 1
+        right_child = index * 2 + 2
 
         # check if out of range and determine if which node is smaller
-        if left < len(self.store):
+        if left_child < len(self.store):
             
-            # set min_child to left node if right child is larger or if there is no right child
-            if right < len(self.store):
-                if self.store[left].key < self.store[right].key:
-                    smaller = left
+            # set smaller_child to left node if right child is larger or if there is no right child
+            if right_child < len(self.store):
+                if self.store[left_child].key < self.store[right_child].key:
+                    smaller_child = left_child
                 else:
-                    smaller = right
+                    smaller_child = right_child
             else:
-                smaller = left
+                smaller_child = left_child
             
             # swap the node with the smaller child node
-            if self.store[index].key > self.store[smaller].key:
-                self.swap(index, smaller)
-                self.heap_down(smaller)
+            if self.store[index].key > self.store[smaller_child].key:
+                self.swap(index, smaller_child)
+                self.heap_down(smaller_child)
        
 
     def swap(self, index_1, index_2):
