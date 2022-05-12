@@ -1,3 +1,6 @@
+from turtle import left, right
+
+
 class HeapNode:
   
     def __init__(self, key, value):
@@ -43,7 +46,7 @@ class MinHeap:
             return None
         
         last_node_idx = len(self.store)-1
-        self.store[last_node_idx], self.store[0] = self.store[0], self.store[last_node_idx]
+        self.swap(last_node_idx, 0)
         removed = self.store.pop()
         self.heap_down(0)
         return removed.value
@@ -80,7 +83,7 @@ class MinHeap:
         if index == 0:
             return
         if self.store[index].key < self.store[(index-1) // 2].key:
-            self.store[index], self.store[(index-1) // 2] = self.store[(index-1) // 2], self.store[index]
+            self.swap(index, (index-1) // 2)
             self.heap_up((index-1) // 2)
 
 
@@ -104,15 +107,15 @@ class MinHeap:
         # when both left and child exists, find min
         elif left_child < len(self.store) and right_child < len(self.store):
             if self.store[left_child].key < self.store[right_child].key:
-                self.store[index], self.store[left_child] = self.store[left_child], self.store[index]
+                self.swap(index, left_child)
                 self.heap_down(left_child)
             else:
-                self.store[index], self.store[right_child] = self.store[right_child], self.store[index]
+                self.swap(index, right_child)
                 self.heap_down(right_child)
         # has one child, just the left
         elif left_child < len(self.store):
             if self.store[index].key > self.store[left_child].key:
-                self.store[index], self.store[left_child] = self.store[left_child], self.store[index]
+                self.swap(index, left_child)
                 self.heap_down(left_child)
 
             
