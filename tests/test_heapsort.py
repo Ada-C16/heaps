@@ -1,4 +1,5 @@
 from heaps.heap_sort import heap_sort
+from tests.test_min_heap import heap
 
 def test_it_sorts_an_empty_list():
     assert heap_sort([]) == []
@@ -15,3 +16,6 @@ def test_it_can_sort_a_5_element_list():
 
     # Assert
     assert result == [3, 5, 16, 27, 50]
+
+l = [5, 27, 3, 16, 50]
+heap_sort(l)
