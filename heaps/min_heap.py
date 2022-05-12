@@ -53,7 +53,7 @@ class MinHeap:
         self.heap_down(0)
         
         #return the value of the root - the min value
-        return str(min.value)
+        return min.value
         
     
     def __str__(self):
