@@ -1,3 +1,4 @@
+from heapq import heappush, heappop
 
 
 def heap_sort(list):
@@ -5,4 +6,15 @@ def heap_sort(list):
         Time Complexity:  ?
         Space Complexity: ?
     """
-    pass
+    heap = []
+
+    for item in list:
+        heappush(heap, item)
+
+    ordered = []
+
+    while len(heap) > 0:
+        value = heappop(heap)
+        ordered.append(value)
+
+    return ordered

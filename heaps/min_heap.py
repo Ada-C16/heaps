@@ -1,3 +1,6 @@
+from turtle import right
+
+
 class HeapNode:
 
     def __init__(self, key, value):
@@ -22,6 +25,9 @@ class MinHeap:
             Time Complexity: O(log n)
             Space Complexity: O(1)
         """
+        if value is None:
+            value = key
+
         new_node = HeapNode(key, value)
         self.store.append(new_node)
 
@@ -33,7 +39,19 @@ class MinHeap:
             Time Complexity: ?
             Space Complexity: ?
         """
-        pass
+
+        if self.empty():
+            return None
+
+        first_node = 0
+        last_node = len(self.store)-1
+
+        self.swap(first_node, last_node)
+        result = self.store.pop()
+
+        self.heap_down(first_node)
+
+        return result.value
 
     def __str__(self):
         """ This method lets you print the heap, when you're testing your app.
@@ -77,11 +95,19 @@ class MinHeap:
         """
         right_child = (index * 2) + 2
         left_child = (index * 2) + 1
-        temp = index
-        while parent >= 0 and self.store[parent].key > self.store[temp].key:
-            self.swap(temp, parent)
-            temp = parent
-            parent = (temp - 1) // 2
+
+        if left_child < len(self.store):
+            if right_child < len(self.store):
+                if self.store[left_child].key < self.store[right_child].key:
+                    child = left_child
+                else:
+                    child = right_child
+            else:
+                child = left_child
+
+            if self.store[child].key < self.store[index].key:
+                self.swap(index, child)
+                self.heap_down(child)
 
     def swap(self, index_1, index_2):
         """ Swaps two elements in self.store
