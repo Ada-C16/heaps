@@ -20,7 +20,7 @@ class MinHeap:
         """ This method adds a HeapNode instance to the heap
             If value == None the new node's value should be set to key
             Time Complexity: O(log n)
-            Space Complexity: O(1)
+            Space Complexity: O(log n)
         """
         if value == None:
             value = key
@@ -35,7 +35,7 @@ class MinHeap:
         """ This method removes and returns an element from the heap
             maintaining the heap structure
             Time Complexity:  O(log n)
-            Space Complexity:  O(1)
+            Space Complexity:  O(log n)
         """
         if self.empty():
             return None
@@ -77,7 +77,7 @@ class MinHeap:
             
             This could be **very** helpful for the add method.
             Time complexity:  O(log n)
-            Space complexity: O(1)
+            Space complexity: O(log n)
         """
         if index == 0:
             return 
