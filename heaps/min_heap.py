@@ -21,7 +21,7 @@ class MinHeap:
         """ Adds a HeapNode instance to the heap
             If value == None the new node's value is set to key
             Time Complexity: O(log n)
-            Space Complexity: O(1)
+            Space Complexity: O(n)
         """
         if value == None: 
             value = key
@@ -38,12 +38,14 @@ class MinHeap:
             Time Complexity: O(log n)
             Space Complexity: O(1)
         """
-        if self.empty:
+        if self.empty():
             return None
 
         self.swap(0, len(self.store) - 1)
         min = self.store.pop()
-        self.heap_down(0)
+
+        if not self.empty():
+            self.heap_down(0)
 
         return min.value
 
@@ -60,7 +62,7 @@ class MinHeap:
             Time complexity: O(1)
             Space complexity: O(1)
         """
-        return self.store == None
+        return len(self.store) == 0
 
 
     def heap_up(self, index):
@@ -68,8 +70,8 @@ class MinHeap:
             If it is less than it's parent node until the Heap
             property is reestablished.
             
-            Time complexity: ?
-            Space complexity: ?
+            Time complexity: O(1)
+            Space complexity: O(n)
         """
         if index == 0:
             return 
@@ -88,35 +90,20 @@ class MinHeap:
         left_index = (index * 2) + 1
         right_index = (index * 2) + 2
         parent = self.store[index]
-        left_child = self.store[left_index]
-        right_child = self.store[right_index]
 
-        if left_child == None: 
-            return 
-        
-        if left_child and right_child: 
-            if parent.key > left_child.key and parent.key > right_child.key: 
-                if left_child.key > right_child.key:
-                    self.swap(index, right_index)
-                    self.heap_down(right_index)
-                else: 
-                    self.swap(index, left_index)
-                    self.heap_down(left_index)
-            if parent.key > left_child.key:
-                self.swap(index, left_index)
-                self.heap_down(left_index)
-            if parent.key > right_child.key:
-                self.swap(index, right_index)
-                self.heap_down(right_index)
+        if left_index < len(self.store):
+            if right_index < len(self.store):
+                if self.store[left_index].key < self.store[right_index].key:
+                    smaller_child = left_index
+                else:
+                    smaller_child = right_index
             else: 
-                return 
+                smaller_child = left_index
 
-        if parent.key > left_child.key: 
-            self.swap(index, left_index)
-            self.heap_down(left_index)
+            if parent.key > self.store[smaller_child].key:
+                self.swap(index, smaller_child)
+                self.heap_down(smaller_child)
 
-        return
-            
     def swap(self, index_1, index_2):
         """ Swaps two elements in self.store
             at index_1 and index_2
