@@ -19,20 +19,34 @@ class MinHeap:
     def add(self, key, value = None):
         """ This method adds a HeapNode instance to the heap
             If value == None the new node's value should be set to key
-            Time Complexity: ?
-            Space Complexity: ?
+            Time Complexity: O(log n)
+            Space Complexity: O(1)
         """
-        pass
+        if value == None:
+            value = key
+        
+        self.store.append(HeapNode(key, value))
+        self.heap_up(len(self.store) - 1)
 
+    # this method removes heap node with minimum key
     def remove(self):
         """ This method removes and returns an element from the heap
             maintaining the heap structure
-            Time Complexity: ?
-            Space Complexity: ?
+            Time Complexity: O(log n)
+            Space Complexity: O(1)
         """
-        pass
+        if len(self.store) == 0:
+            return None
 
+        first_node = 0
+        last_node = len(self.store) - 1
 
+        self.swap(first_node, last_node)
+        result = self.store.pop()
+
+        self.heap_down(first_node)
+
+        return result.value
     
     def __str__(self):
         """ This method lets you print the heap, when you're testing your app.
@@ -44,11 +58,10 @@ class MinHeap:
 
     def empty(self):
         """ This method returns true if the heap is empty
-            Time complexity: ?
-            Space complexity: ?
+            Time complexity: O(1)
+            Space complexity: O(1)
         """
-        pass
-
+        return len(self.store) == 0
 
     def heap_up(self, index):
         """ This helper method takes an index and
@@ -57,18 +70,40 @@ class MinHeap:
             property is reestablished.
             
             This could be **very** helpful for the add method.
-            Time complexity: ?
-            Space complexity: ?
+            Time complexity: O(log n)
+            Space complexity: O(1)
         """
-        pass
+        temporary = index
+        while temporary > 0:
+            parent = (temporary - 1) // 2
+            if self.store[temporary].key < self.store[parent].key:
+                self.swap(temporary, parent)
+                temporary = parent
+            else:
+                break
 
+    
+    # method to move heap down
     def heap_down(self, index):
         """ This helper method takes an index and 
             moves the corresponding element down the heap if it's 
             larger than either of its children and continues until
             the heap property is reestablished.
         """
-        pass
+        temporary = index
+        while temporary < len(self.store) - 1:
+            left_child = 2 * temporary + 1
+            right_child = 2 * temporary + 2
+            if left_child < len(self.store) and self.store[temporary].key > self.store[left_child].key:
+                temporary = left_child
+            if right_child < len(self.store) and self.store[temporary].key > self.store[right_child].key:
+                temporary = right_child
+            if temporary == index:
+                break
+            self.swap(temporary, index)
+            index = temporary
+        
+
 
     
     def swap(self, index_1, index_2):
