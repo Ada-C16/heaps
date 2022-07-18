@@ -10,6 +10,7 @@ class HeapNode:
     def __repr__(self):
         return str(self.value)
 
+
 class MinHeap:
 
     def __init__(self):
@@ -17,20 +18,25 @@ class MinHeap:
 
 
     def add(self, key, value = None):
-        """ This method adds a HeapNode instance to the heap
-            If value == None the new node's value should be set to key
-            Time Complexity: ?
-            Space Complexity: ?
-        """
-        pass
+    
+        if value == None:
+            value = key
+
+        node = HeapNode(key, value)
+        self.store.append(node)
+        self.heap_up(len(self.store) - 1)
 
     def remove(self):
-        """ This method removes and returns an element from the heap
-            maintaining the heap structure
-            Time Complexity: ?
-            Space Complexity: ?
-        """
-        pass
+    
+        if len(self.store) == 0:
+            return None
+
+        self.swap(0, len(self.store) - 1)
+        min = self.store.pop()
+        self.heap_down(0)
+
+        return min.value
+
 
 
     
@@ -43,32 +49,41 @@ class MinHeap:
 
 
     def empty(self):
-        """ This method returns true if the heap is empty
-            Time complexity: ?
-            Space complexity: ?
-        """
-        pass
+        
+        return len(self.store) == 0
 
 
     def heap_up(self, index):
-        """ This helper method takes an index and
-            moves the corresponding element up the heap, if 
-            it is less than it's parent node until the Heap
-            property is reestablished.
-            
-            This could be **very** helpful for the add method.
-            Time complexity: ?
-            Space complexity: ?
-        """
-        pass
+    
+        if index == 0:
+            return
+        
+        parent = (index - 1) // 2
+        store = self.store
+        if store[parent].key > store[index].key:
+            self.swap(parent, index)
+            self.heap_up(parent)
 
     def heap_down(self, index):
         """ This helper method takes an index and 
-            moves the corresponding element down the heap if it's 
-            larger than either of its children and continues until
-            the heap property is reestablished.
+            moves it up the heap if it's smaller
+            than it's parent node.
         """
-        pass
+        left_child = index * 2 + 1
+        right_child = index * 2 + 2
+        store = self.store
+        if left_child < len(self.store):
+            if right_child < len(self.store):
+                if store[left_child].key < store[right_child].key:
+                    smaller = left_child
+                else:
+                    smaller = right_child
+            else:
+                smaller = left_child
+            
+            if store[index].key > store[smaller].key:
+                self.swap(index, smaller)
+                self.heap_down(smaller)
 
     
     def swap(self, index_1, index_2):
