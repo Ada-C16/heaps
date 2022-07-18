@@ -1,3 +1,4 @@
+from heaps.min_heap import MinHeap
 
 
 def heap_sort(list):
@@ -5,4 +6,15 @@ def heap_sort(list):
         Time Complexity:  ?
         Space Complexity: ?
     """
-    pass
+    if len(list) <= 1:
+        return list
+        
+    heap = MinHeap()
+
+    for item in list:
+        heap.add(item)
+
+    return_list = []
+    while not heap.empty():
+        return_list.append(heap.remove())
+

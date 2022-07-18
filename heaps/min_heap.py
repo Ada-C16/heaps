@@ -37,11 +37,11 @@ class MinHeap:
         if self.empty():
             return None
         
-        self.swap(0, self.store[-1])
+        self.swap(0, -1)
 
         removed_value = self.store.pop()
 
-        self.heap_down()
+        self.heap_down(0)
 
         return removed_value
 
