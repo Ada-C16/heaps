@@ -19,8 +19,8 @@ class MinHeap:
     def add(self, key, value = None):
         """ This method adds a HeapNode instance to the heap
             If value == None the new node's value should be set to key
-            Time Complexity: ?
-            Space Complexity: ?
+            Time Complexity: O(1)
+            Space Complexity: O(n)
         """
         if value == None:
             value = key
@@ -33,8 +33,8 @@ class MinHeap:
     def remove(self):
         """ This method removes and returns an element from the heap
             maintaining the heap structure
-            Time Complexity: ?
-            Space Complexity: ?
+            Time Complexity: O(1)
+            Space Complexity: O(1)
         """
         if len(self.store)== 0:
             return None
