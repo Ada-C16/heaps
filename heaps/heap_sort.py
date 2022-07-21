@@ -1,8 +1,17 @@
+from heapq import heappush, heappop
 
 
 def heap_sort(list):
-    """ This method uses a heap to sort an array.
-        Time Complexity:  ?
-        Space Complexity: ?
-    """
-    pass
+
+    heap = []
+
+    for item in list:
+        heappush(heap, item)
+
+    ordered = []
+
+    while len(heap) > 0:
+        val = heappop(heap)
+        ordered.append(val)
+
+    return ordered
