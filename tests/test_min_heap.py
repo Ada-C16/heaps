@@ -1,3 +1,4 @@
+import logging
 import pytest
 from heaps.min_heap import MinHeap
 
@@ -69,12 +70,15 @@ def test_it_can_remove_nodes_in_proper_order(heap):
     heap.add(0, "Donuts")
     heap.add(16, "Cookies")
 
+    print(str(heap))
 
     # Act
     returned_items = ["Donuts", "Pizza", "Pasta", "Soup", "Cookies", "Cake"]
 
+
     for item in returned_items:
         assert heap.remove() == item
+        print(str(heap))
 
 def test_removing_a_node_from_an_empty_heap_is_none(heap):
     assert heap.remove() == None
