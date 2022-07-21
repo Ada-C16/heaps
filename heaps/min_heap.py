@@ -22,7 +22,10 @@ class MinHeap:
             Time Complexity: ?
             Space Complexity: ?
         """
-        pass
+        if value == None:
+            value = key
+
+        self.store.append(HeapNode(key,value))
 
     def remove(self):
         """ This method removes and returns an element from the heap
