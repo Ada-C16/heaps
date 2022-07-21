@@ -5,4 +5,5 @@ def heap_sort(list):
         Time Complexity:  ?
         Space Complexity: ?
     """
-    pass
+    if len(list) <= 1:  # returns list of empty or only has one node
+        return list
