@@ -35,17 +35,14 @@ class MinHeap:
             Time Complexity: ?
             Space Complexity: ?
         """
-        pass
-        if len(self.store) == 0:
-            return None
+        if self.empty():
+            return
         top_node = self.store[0]
-        #swap first and last
         self.swap(0, -1)
-        #remove last
         result = self.store.pop()
-        while self.empty() == False:
+        if not self.empty():
             self.heap_down(0)
-        return result
+        return str(result)
     
     def __str__(self):
         """ This method lets you print the heap, when you're testing your app.
@@ -88,29 +85,34 @@ class MinHeap:
             current_key = self.store[index].key
             parent_key = self.store[parent_index].key 
 
+    def has_left_child(self, index):
+        left_child_index = int((2 * index) + 1)
+        if left_child_index <= len(self.store) - 1:
+            return True
+        return False
+
+    def has_right_child(self, index):
+        right_child_index = int((2 * index) + 2)
+        if right_child_index <= len(self.store) - 1:
+            return True
+        return False
+    
+
     def heap_down(self, index):
         """ This helper method takes an index and 
             moves the corresponding element down the heap if it's 
             larger than either of its children and continues until
             the heap property is reestablished.
         """
-        # i need to figure out how to ensure that an index is within bounds
+        if self.has_left_child(index) and (self.store[index].key > self.store[int((2 * index) + 1)].key):
+            left_child_index = (2 * index) + 1
+            self.swap(index, left_child_index)
+            self.heap_down(left_child_index)
 
-        # left child
-        if index <= len(self.store) - 1 and int((2 * index) + 1) <= len(self.store) - 1:
-            while self.store[index].key > self.store[int((2 * index) + 1)].key:
-                self.swap(index, int((2 * index) + 1))
-                index = int((2 * 1) + 1)
-                if index > len(self.store) - 1 or int((2 * index) + 1) > len(self.store) - 1:
-                    break
-
-        #right child
-        # while self.store[index].key > self.store[int((2 * index) + 2)].key:
-        #     self.swap(index, int((2 * index) + 2))
-        #     index = int((2 * index) + 2)
-        #     if index > len(self.store) - 1:
-        #         break
-            
+        if self.has_right_child(index) and (self.store[index].key > self.store[int((2 * index) + 2)].key):
+            right_child_index = (2 * index) + 2
+            self.swap(index, right_child_index)
+            self.heap_down(right_child_index)           
         return
 
     
@@ -123,15 +125,24 @@ class MinHeap:
         self.store[index_1] = self.store[index_2]
         self.store[index_2] = temp
 
-# some_heap = MinHeap()
-# some_heap.add(3, "Pasta")
-# some_heap.add(6, "Soup")
-# some_heap.add(1, "Pizza")
-# some_heap.add(0, "Donuts")
-# some_heap.add(16, "Cookies")
-# some_heap.add(57, "Cake")
+some_heap = MinHeap()
+some_heap.add(3, "Pasta")
+some_heap.add(6, "Soup")
+some_heap.add(1, "Pizza")
+some_heap.add(0, "Donuts")
+some_heap.add(16, "Cookies")
+some_heap.add(57, "Cake")
 # print(some_heap.store)
 # for item in some_heap.store:
 #     print(item.value)
 #     some_heap.remove()
 #     print(some_heap.store)
+print(some_heap.store)
+i = 2
+print(f"{some_heap.store[i]} has a left child: {some_heap.has_left_child(i)}")
+print(f"{some_heap.store[i]} has a right child: {some_heap.has_right_child(i)}")
+print("K! gonna remooooove")
+some_heap.remove()
+print(some_heap.store)
+print(f"{some_heap.store[i]} has a left child: {some_heap.has_left_child(i)}")
+print(f"{some_heap.store[i]} has a right child: {some_heap.has_right_child(i)}")
