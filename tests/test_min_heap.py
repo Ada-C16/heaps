@@ -69,9 +69,9 @@ def test_it_can_remove_nodes_in_proper_order(heap):
     heap.add(0, "Donuts")
     heap.add(16, "Cookies")
 
-
     # Act
     returned_items = ["Donuts", "Pizza", "Pasta", "Soup", "Cookies", "Cake"]
+    # assert heap.store == returned_items
 
     for item in returned_items:
         assert heap.remove() == item
