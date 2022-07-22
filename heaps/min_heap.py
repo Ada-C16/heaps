@@ -19,8 +19,8 @@ class MinHeap:
     def add(self, key, value = None):
         """ This method adds a HeapNode instance to the heap
             If value == None the new node's value should be set to key
-            Time Complexity: ?
-            Space Complexity: ?
+            Time Complexity: ? O(log n)
+            Space Complexity: ? O(1)
         """
         if value == None:
             value = key
@@ -32,12 +32,11 @@ class MinHeap:
     def remove(self):
         """ This method removes and returns an element from the heap
             maintaining the heap structure
-            Time Complexity: ?
-            Space Complexity: ?
+            Time Complexity: ? O(log n)
+            Space Complexity: ? O(1)
         """
         if self.empty():
             return
-        top_node = self.store[0]
         self.swap(0, -1)
         result = self.store.pop()
         if not self.empty():
@@ -61,7 +60,6 @@ class MinHeap:
             return True
         return False
 
-
     def heap_up(self, index):
         """ This helper method takes an index and
             moves the corresponding element up the heap, if 
@@ -70,13 +68,11 @@ class MinHeap:
             
             This could be **very** helpful for the add method.
             Time complexity: ? O(log n)
-            Space complexity: ?
+            Space complexity: ? O(1)
         """
         parent_index = int((index - 1) / 2)
         current_key = self.store[index].key 
         parent_key = self.store[parent_index].key 
-        # print(f"parent key is {parent_key}")
-        # print(f"current key is {current_key}")
 
         while current_key < parent_key:
             self.swap(index, parent_index)
@@ -97,12 +93,13 @@ class MinHeap:
             return True
         return False
     
-
     def heap_down(self, index):
         """ This helper method takes an index and 
             moves the corresponding element down the heap if it's 
             larger than either of its children and continues until
             the heap property is reestablished.
+            time complexity O(log n)
+            space complexity O(1)
         """
         if self.has_left_child(index) and (self.store[index].key > self.store[int((2 * index) + 1)].key):
             left_child_index = (2 * index) + 1
@@ -114,8 +111,7 @@ class MinHeap:
             self.swap(index, right_child_index)
             self.heap_down(right_child_index)           
         return
-
-    
+ 
     def swap(self, index_1, index_2):
         """ Swaps two elements in self.store
             at index_1 and index_2
@@ -124,25 +120,3 @@ class MinHeap:
         temp = self.store[index_1]
         self.store[index_1] = self.store[index_2]
         self.store[index_2] = temp
-
-some_heap = MinHeap()
-some_heap.add(3, "Pasta")
-some_heap.add(6, "Soup")
-some_heap.add(1, "Pizza")
-some_heap.add(0, "Donuts")
-some_heap.add(16, "Cookies")
-some_heap.add(57, "Cake")
-# print(some_heap.store)
-# for item in some_heap.store:
-#     print(item.value)
-#     some_heap.remove()
-#     print(some_heap.store)
-print(some_heap.store)
-i = 2
-print(f"{some_heap.store[i]} has a left child: {some_heap.has_left_child(i)}")
-print(f"{some_heap.store[i]} has a right child: {some_heap.has_right_child(i)}")
-print("K! gonna remooooove")
-some_heap.remove()
-print(some_heap.store)
-print(f"{some_heap.store[i]} has a left child: {some_heap.has_left_child(i)}")
-print(f"{some_heap.store[i]} has a right child: {some_heap.has_right_child(i)}")
