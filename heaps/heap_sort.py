@@ -13,9 +13,8 @@ def heap_sort(list):
     for value in list:
         heap.add(value)
 
-    index = 0
+    result = []  # unpacking the heap into a new result list to avoid side effects
     while not heap.empty():
-        list[index] = heap.remove()
-        index += 1
+        result.append(heap.remove())
 
-    return list
+    return result

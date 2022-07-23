@@ -18,9 +18,9 @@ class MinHeap:
         """This method adds a HeapNode instance to the heap
         If value == None the new node's value should be set to key
         Time Complexity: O(logn)
-        Space Complexity: O(n)
+        Space Complexity: O(logn) - heap_up is recursive, stack soace being consumed
         """
-        if value == None:
+        if value is None:
             value = key
 
         self.store.append(HeapNode(key, value))
@@ -30,9 +30,9 @@ class MinHeap:
         """This method removes and returns an element from the heap
         maintaining the heap structure
         Time Complexity: O(logn)
-        Space Complexity: O(1)
+        Space Complexity: O(logn) - heap_down is recursive, stack soace being consumed
         """
-        if len(self.store) == 0:
+        if self.empty():
             return None
 
         self.swap(0, len(self.store) - 1)  # swap first w/ last
@@ -52,7 +52,7 @@ class MinHeap:
         Time complexity: O(1)
         Space complexity: O(1)
         """
-        return self.store == []
+        return not self.store
 
     def heap_up(self, index):
         """This helper method takes an index and
@@ -62,18 +62,15 @@ class MinHeap:
 
         This could be **very** helpful for the add method.
         Time complexity: O(logn)
-        Space complexity: O(1)
+        Space complexity: O(logn)
         """
-        if self.empty():
+        if index == 0:
             return
 
-        if index != 0:
-            check = (index - 1) // 2
-            if self.store[index].key < self.store[check].key:
-                self.swap(index, check)
-
+        check = (index - 1) // 2
+        if self.store[index].key < self.store[check].key:
+            self.swap(index, check)
             self.heap_up(check)
-        return
 
     def heap_down(self, index):
         """This helper method takes an index and
@@ -83,17 +80,17 @@ class MinHeap:
         """
         left = index * 2 + 1
         right = index * 2 + 2
-        store = self.store
+
         if left < len(self.store):
             if right < len(self.store):
-                if store[left].key < store[right].key:
+                if self.store[left].key < self.store[right].key:
                     less = left
                 else:
                     less = right
             else:
                 less = left
 
-            if store[index].key > store[less].key:
+            if self.store[index].key > self.store[less].key:
                 self.swap(index, less)
                 self.heap_down(less)
 
